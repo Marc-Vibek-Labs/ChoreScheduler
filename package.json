@@ -1,0 +1,38 @@
+{
+  "name": "chorescheduler",
+  "version": "0.0.1",
+  "private": true,
+  "repository": "git@github.com:snappymob/nucleuskit-web.git",
+  "author": "Marc-Vibek",
+  "scripts": {
+    "docker:dev": "docker-compose -f docker-compose.dev.yml --env-file .development.env",
+    "start": "yarn docker:dev up -d",
+    "build": "yarn docker:dev build",
+    "restart": "yarn docker:dev restart",
+    "stop": "yarn docker:dev stop",
+    "format": "prettier --write .",
+    "backend:knex": "yarn docker:dev exec backend yarn knex",
+    "backend:migrate:make": "cd backend && yarn migrate:make",
+    "backend:migrate:up": "yarn backend:knex migrate:up",
+    "backend:migrate:down": "yarn backend:knex migrate:down",
+    "backend:migrate:latest": "yarn backend:knex migrate:latest",
+    "backend:migrate:rollback": "yarn backend:knex migrate:rollback",
+    "backend:migrate:currentVersion": "yarn backend:knex migrate:currentVersion",
+    "backend:migrate:list": "yarn backend:knex migrate:list",
+    "backend:sonar": "cd backend && node sonar.js",
+    "frontend:sonar": "cd frontend && node sonar.js",
+    "sonar:all": "yarn backend:sonar & yarn frontend:sonar",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.18.6",
+    "@types/lodash": "^4.14.191",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
+    "prettier": "^3.2.4"
+  },
+  "lint-staged": {
+    "backend/**/*.ts": ".scripts/pre-commit.sh backend",
+    "frontend/**/*.{js,jsx,ts,tsx,vue}": ".scripts/pre-commit.sh frontend/app"
+  }
+}
