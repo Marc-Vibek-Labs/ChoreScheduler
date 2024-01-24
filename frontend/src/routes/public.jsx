@@ -31,9 +31,9 @@ export const publicRoutes = [
     element: <UnauthorizedApp />,
     errorElement: <NotFound />,
     children: [
-      // { path: "/", element: <Navigate to="/auth/login" /> },
+      { path: "/", element: <Navigate to="/auth/login" /> },
       { path: "/auth/*", element: <AuthRoutes /> },
-      // { path: "*", element: <Navigate to="/auth/login" /> },
+      { path: "*", element: <Navigate to="/auth/login" /> },
     ],
   },
 ];

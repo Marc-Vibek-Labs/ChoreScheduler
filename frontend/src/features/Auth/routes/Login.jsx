@@ -13,7 +13,7 @@ export const Login = () => {
       linkBottom={"Sign up for free"}
       textBottom={"Don’t have an account?"}
       coverImgSrc="/assets/images/auth/img_login_web.png"
-      subHeader={"Login to manage your account with iLending."}
+      subHeader={"Login to manage your account with Chore Scheduler."}
     >
       <LoginForm defaultUsername={"username"} />
     </AuthFormLayout>

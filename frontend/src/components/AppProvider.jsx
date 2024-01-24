@@ -9,6 +9,7 @@ import {
   ChakraProvider,
 } from "@chakra-ui/react";
 import theme from "../theme/theme";
+import ToggleColorMode from "./ToggleColorMode";
 import { ErrorBoundary } from "react-error-boundary";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -50,6 +51,8 @@ export const AppProvider = ({ children }) => {
 
   return (
     <ChakraProvider theme={theme}>
+      <ToggleColorMode />
+
       <Suspense
         fallback={
           <Flex h="full" w="full" alignItems="center" justifyContent="center">
