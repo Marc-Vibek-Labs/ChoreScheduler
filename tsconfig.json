@@ -1,4 +1,7 @@
 {
+  "compilerOptions": {
+    "jsx": "react",
+  },
   "eslint.workingDirectories": [
     { "directory": "frontend", "changeProcessCWD": true },
     { "directory": "backend", "changeProcessCWD": true },

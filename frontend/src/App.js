@@ -1,23 +1,12 @@
-import {
-  ChakraBaseProvider,
-  extendBaseTheme,
-  theme as chakraTheme,
-} from "@chakra-ui/react";
+import { AppRoutes } from "./routes";
+import { AppProvider } from "./components/AppProvider";
+import ToggleColorMode from "./components/ToggleColorMode";
 
-const { Button } = chakraTheme.components;
-
-const theme = extendBaseTheme({
-  components: {
-    Button,
-  },
-});
-
-function App() {
+export const App = () => {
   return (
-    <ChakraBaseProvider theme={theme}>
-      <div className="App">Hello</div>
-    </ChakraBaseProvider>
+    <>
+      <ToggleColorMode />
+      <AppProvider>{<AppRoutes />}</AppProvider>
+    </>
   );
-}
-
-export default App;
+};
