@@ -1,15 +1,6 @@
 import { Link as ReactRouterLink } from "react-router-dom";
 import { CustomFade } from "../../../components/CustomFade";
-import {
-  Box,
-  Flex,
-  Text,
-  Link,
-  Image,
-  HStack,
-  Divider,
-  Heading,
-} from "@chakra-ui/react";
+import { Box, Flex, Text, Link, Image, Heading } from "@chakra-ui/react";
 
 export const AuthFormLayout = ({
   linkTo,
@@ -27,13 +18,13 @@ export const AuthFormLayout = ({
         width={{ base: "100%", lg: "50%" }}
         paddingLeft="22px"
         paddingRight="22px"
-        paddingTop="145px"
+        paddingTop="50px"
         backgroundColor="neutral.50"
         my="auto"
       >
         <CustomFade style={{ width: "100%" }}>
           <Box marginX="auto" width={{ base: "100%", md: "90vw", lg: "483px" }}>
-            <Flex flexDirection="column" gap="16px" marginBottom="40px">
+            <Flex flexDirection="column" gap="12px" marginBottom="25px">
               <Heading
                 variant={{ base: "headlineTwo", lg: "headlineOne" }}
                 fontWeight="bold"
@@ -44,13 +35,6 @@ export const AuthFormLayout = ({
             </Flex>
             {children}
           </Box>
-          <HStack spacing="4" margin="32px 0 32px" justifyContent="center">
-            <Divider flex="1" borderColor="neutral.300" />
-            <Text as="span" padding="2">
-              {subText}
-            </Text>
-            <Divider flex="1" borderColor="neutral.300" />
-          </HStack>
           <Text align="center" marginTop="32px">
             {textBottom} {""}
             <Link
@@ -58,6 +42,7 @@ export const AuthFormLayout = ({
               to={`../${linkTo}`}
               fontWeight="bold"
               color="primary.500"
+              _hover={{ textDecoration: "none", color: "blue.500" }}
             >
               {linkBottom}
             </Link>
@@ -66,10 +51,10 @@ export const AuthFormLayout = ({
       </Flex>
       <Flex
         width={{ base: "100%", lg: "50%" }}
-        paddingTop="145px"
+        paddingTop="50px"
         paddingLeft="22px"
         paddingRight="22px"
-        paddingBottom="75px"
+        paddingBottom="50px"
         marginTop={{ base: "40px", lg: "0px" }}
         backgroundColor="neutral.100"
         alignItems="center"

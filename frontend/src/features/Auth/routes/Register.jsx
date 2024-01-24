@@ -10,7 +10,7 @@ export const Register = () => {
       header={"Create An Account"}
       textBottom={"Already have an account?"}
       coverImgSrc="/assets/images/auth/img_signup_web.png"
-      subHeader={"Register a free account with iLending."}
+      subHeader={"Register a free account with Chore Scheduler."}
     >
       <RegisterForm />
     </AuthFormLayout>
