@@ -1,12 +1,47 @@
+import * as yup from "yup";
 import { AxiosError } from "axios";
-import { NavLink } from "react-router-dom";
+import {
+  Box,
+  Input,
+  Button,
+  Text,
+  FormControl,
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 // import localStorage from "../../../utils/localStorage";
-// import { InputField, Form } from "../../../components/Form";
-import { Flex, Button, Link, Checkbox, Text } from "@chakra-ui/react";
+
+const userSchema = yup.object({
+  email: yup
+    .string()
+    .trim()
+    .required("Email is required")
+    .email("Invalid email address"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters long")
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, {
+      message:
+        "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character",
+    }),
+});
 
 export const LoginForm = ({ defaultUsername }) => {
   const [rememberMe, setRememberMe] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(userSchema) });
+
+  const onSubmit = async (data) => {
+    // Submit data to your backend API here
+    console.log(data);
+  };
 
   useEffect(() => {
     if (defaultUsername) {
@@ -26,62 +61,31 @@ export const LoginForm = ({ defaultUsername }) => {
   // };
 
   return (
-    <></>
-    // <Form<LoginValues, typeof schema>
-    //   onSubmit={submitHandler}
-    //   schema={schema}
-    //   options={{
-    //     mode: 'onChange'
-    //   }}
-    // >
-    //   {({ register, formState }) => (
-    //     <>
-    //       <InputField
-    //         id="username"
-    //         label={t('Email')}
-    //         isRequired={true}
-    //         type="email"
-    //         defaultValue={defaultUsername}
-    //         placeholder="johndoe@gmail.com"
-    //         error={formState.errors.username}
-    //         registration={register('username')}
-    //       />
-    //       <InputField
-    //         id="password"
-    //         label={t('Password')}
-    //         isRequired={true}
-    //         type="password"
-    //         placeholder="********"
-    //         error={formState.errors.password}
-    //         registration={register('password')}
-    //       />
-    //       <Flex flexDir="row" alignItems="center" justifyContent="space-between" marginTop="35px">
-    //         <Checkbox colorScheme="primary" isChecked={rememberMe} onChange={() => setRememberMe((prev) => !prev)}>
-    //           {t('Remember me')}
-    //         </Checkbox>
-    //         <Link as={NavLink} fontWeight="bold" color="primary.500" to="/auth/forgot-password">
-    //           {t('Forgot your password?')}
-    //         </Link>
-    //       </Flex>
-    //       {mutation.isError && mutation.error instanceof AxiosError && (
-    //         <Text mt="35px" color="red.500">
-    //           {t(mutation.error.response?.data?.message, { ns: 'error' })}
-    //         </Text>
-    //       )}
-    //       <Button
-    //         mt="40px"
-    //         type="submit"
-    //         size="lg"
-    //         variant="primary"
-    //         width="100%"
-    //         isLoading={mutation.isLoading}
-    //         loadingText={t('Submitting...') as string}
-    //         disabled={!formState.isDirty || !formState.isValid}
-    //       >
-    //         {t('Log in')}
-    //       </Button>
-    //     </>
-    //   )}
-    // </Form>
+    <Box as="form" onSubmit={handleSubmit(onSubmit)}>
+      <Text fontSize="2xl" fontWeight="bold" mb="2">
+        Login
+      </Text>
+
+      <FormControl mb="8">
+        <Input type="email" placeholder="Email" {...register("email")} />
+        {errors.email && (
+          <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+        )}
+      </FormControl>
+      <FormControl mb="8">
+        <Input
+          type="password"
+          placeholder="Password"
+          {...register("password")}
+        />
+        {errors.password && (
+          <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+        )}
+      </FormControl>
+
+      <Button type="submit" colorScheme="purple">
+        Login
+      </Button>
+    </Box>
   );
 };

@@ -12,7 +12,7 @@ export const Login = () => {
       subText={"Or Log in with"}
       linkBottom={"Sign up for free"}
       textBottom={"Don’t have an account?"}
-      coverImgSrc="/assets/images/auth/img_login_web.png"
+      coverImgSrc="/images/auth_login.png"
       subHeader={"Login to manage your account with Chore Scheduler."}
     >
       <LoginForm defaultUsername={"username"} />

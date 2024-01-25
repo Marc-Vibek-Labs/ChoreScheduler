@@ -8,8 +8,8 @@ export const Register = () => {
       linkBottom={"Log in"}
       subText={"Or Sign-up with"}
       header={"Create An Account"}
+      coverImgSrc="/images/auth_login.png"
       textBottom={"Already have an account?"}
-      coverImgSrc="/assets/images/auth/img_signup_web.png"
       subHeader={"Register a free account with Chore Scheduler."}
     >
       <RegisterForm />

@@ -18,12 +18,6 @@ const userSchema = yup.object({
     .required("Username is required")
     .min(3, "Username must be at least 3 characters long")
     .max(20, "Username must be less than 20 characters"),
-  groupname: yup
-    .string()
-    .trim()
-    .required("Group Name is required")
-    .min(3, "Group Name must be at least 3 characters long")
-    .max(50, "Group Name must be less than 50 characters"),
   email: yup
     .string()
     .trim()
@@ -69,16 +63,6 @@ export const RegisterForm = () => {
         )}
       </FormControl>
 
-      <FormControl mb="8">
-        <Input
-          type="text"
-          placeholder="Group Name"
-          {...register("groupname")}
-        />
-        {errors.groupname && (
-          <FormErrorMessage>{errors.groupname.message}</FormErrorMessage>
-        )}
-      </FormControl>
       <FormControl mb="8">
         <Input type="email" placeholder="Email" {...register("email")} />
         {errors.email && (

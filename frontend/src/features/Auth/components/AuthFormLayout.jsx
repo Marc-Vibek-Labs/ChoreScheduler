@@ -63,12 +63,11 @@ export const AuthFormLayout = ({
       >
         <CustomFade style={{ width: "100%" }}>
           <Image
-            margin="auto"
-            width="100%"
-            maxW="416.34px"
-            src={coverImgSrc}
             alt="Cover"
+            width="100%"
+            height="auto"
             loading="lazy"
+            src={coverImgSrc}
             backgroundColor="neutral.100"
           />
         </CustomFade>
