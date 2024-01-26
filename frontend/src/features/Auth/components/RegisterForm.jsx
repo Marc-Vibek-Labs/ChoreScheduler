@@ -1,13 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import {
-  Box,
-  Input,
-  Button,
-  Text,
-  FormControl,
-  FormErrorMessage,
-} from "@chakra-ui/react";
+import { Box, Input, Button, Text, FormControl } from "@chakra-ui/react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -34,9 +27,9 @@ const userSchema = yup.object({
   number: yup
     .string()
     .trim()
-    .required("Phone Number is required")
-    .min(10, "Phone Number must be at least 10 digits long")
-    .max(12, "Phone Number must be less than 12 digits long"),
+    .required("Phone number is required")
+    .min(10, "Phone number must be at least 10 digits long")
+    .max(12, "Phone number must be less than 12 digits long"),
 });
 
 export const RegisterForm = () => {
@@ -59,14 +52,18 @@ export const RegisterForm = () => {
       <FormControl mb="8">
         <Input type="text" placeholder="Username" {...register("username")} />
         {errors.username && (
-          <FormErrorMessage>{errors.username.message}</FormErrorMessage>
+          <Text color="red" fontSize="sm" mt="2">
+            {errors.username.message}
+          </Text>
         )}
       </FormControl>
 
       <FormControl mb="8">
         <Input type="email" placeholder="Email" {...register("email")} />
         {errors.email && (
-          <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+          <Text color="red" fontSize="sm" mt="2">
+            {errors.email.message}
+          </Text>
         )}
       </FormControl>
       <FormControl mb="8">
@@ -76,14 +73,18 @@ export const RegisterForm = () => {
           {...register("password")}
         />
         {errors.password && (
-          <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+          <Text color="red" fontSize="sm" mt="2">
+            {errors.password.message}
+          </Text>
         )}
       </FormControl>
 
       <FormControl mb="8">
         <Input type="tel" placeholder="Phone Number" {...register("number")} />
         {errors.number && (
-          <FormErrorMessage>{errors.number.message}</FormErrorMessage>
+          <Text color="red" fontSize="sm" mt="2">
+            {errors.number.message}
+          </Text>
         )}
       </FormControl>
       <Button type="submit" colorScheme="purple">

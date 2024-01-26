@@ -1,17 +1,10 @@
 import * as yup from "yup";
 import { AxiosError } from "axios";
-import {
-  Box,
-  Input,
-  Button,
-  Text,
-  FormControl,
-  FormErrorMessage,
-} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 // import localStorage from "../../../utils/localStorage";
+import { Box, Input, Button, Text, FormControl } from "@chakra-ui/react";
 
 const userSchema = yup.object({
   email: yup
@@ -69,7 +62,9 @@ export const LoginForm = ({ defaultUsername }) => {
       <FormControl mb="8">
         <Input type="email" placeholder="Email" {...register("email")} />
         {errors.email && (
-          <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+          <Text color="red" fontSize="sm" mt="2">
+            {errors.email.message}
+          </Text>
         )}
       </FormControl>
       <FormControl mb="8">
@@ -79,7 +74,9 @@ export const LoginForm = ({ defaultUsername }) => {
           {...register("password")}
         />
         {errors.password && (
-          <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+          <Text color="red" fontSize="sm" mt="2">
+            {errors.password.message}
+          </Text>
         )}
       </FormControl>
 
