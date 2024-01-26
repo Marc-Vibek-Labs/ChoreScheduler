@@ -2,8 +2,8 @@
 
 # Development
 
-https://github.com/Marc-Vibek-Labs/choreScheduler.git
-cd choreScheduler
+Go to -> https://github.com/Marc-Vibek-Labs/choreScheduler.git
+Move into the project directory -> cd choreScheduler
 
 # Setup environment files
 
@@ -32,7 +32,7 @@ Only use steps 1 and 2 if running sonarqube locally
 
 # Setup docker dev environment
 
-## This will build and start the dockers. 
+## This will build and start the dockers.
 
 Run `yarn start --build` or `docker-compose -f docker-compose.dev.yml --env-file .development.env up -d --build`
 
