@@ -1,7 +1,7 @@
-import { Injectable, NestMiddleware } from '@nestjs/common'
-import { Request, Response, NextFunction } from 'express'
 import * as Pino from 'pino'
 import { objectMap } from '../helpers/object.helper'
+import { Request, Response, NextFunction } from 'express'
+import { Injectable, NestMiddleware } from '@nestjs/common'
 import { Primitive, RecursiveObject } from '../helpers/type.helper'
 
 @Injectable()
@@ -42,10 +42,10 @@ export class LoggerMiddleware implements NestMiddleware {
         {
           ip: req.ip,
           user: req.user,
-          statusCode: res.statusCode,
           body: censoredBody,
+          headers: req.headers,
           params: censoredParams,
-          headers: req.headers
+          statusCode: res.statusCode
         },
         `Called ${req.method} ${req.url} with status code ${res.statusCode}`
       )
