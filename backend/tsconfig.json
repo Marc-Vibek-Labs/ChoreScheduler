@@ -13,7 +13,8 @@
     "forceConsistentCasingInFileNames": false,
     "incremental": true,
     "skipLibCheck": true,
-    "typeRoots": ["./node_modules/@types", "./src/lib.d.ts"]
+    "typeRoots": ["./node_modules/@types", "./src/lib.d.ts"],
+    "types": ["pino-std-serializers"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test"]

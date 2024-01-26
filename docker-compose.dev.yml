@@ -13,7 +13,7 @@ services:
     volumes:
       - ./backend:/usr/src/app
       - backend-deps:/usr/src/app/node_modules
-      - ./.prettierrc:/usr/src/.prettierrc
+      - ./prettier.config.js:/usr/src/prettier.config.js
       - ./.eslintrc.js:/usr/src/.eslintrc.js
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
@@ -54,6 +54,7 @@ services:
 
 volumes:
   frontend-deps:
-
+  backend-deps:
+  
 networks:
   choreScheduler:
