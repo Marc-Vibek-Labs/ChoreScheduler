@@ -1,6 +1,25 @@
 version: "3.7"
 
 services:
+  backend:
+    build: backend
+    command: yarn dev
+    container_name: choreScheduler-backend
+    environment:
+      BACKEND_PORT: $BACKEND_PORT
+    env_file:
+      - .development.env
+    working_dir: /usr/src/app
+    volumes:
+      - ./backend:/usr/src/app
+      - backend-deps:/usr/src/app/node_modules
+      - ./.prettierrc:/usr/src/.prettierrc
+      - ./.eslintrc.js:/usr/src/.eslintrc.js
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+      - 9229:9229
+    networks:
+      - ilending
   frontend:
     build: frontend
     command: yarn dev
