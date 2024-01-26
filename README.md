@@ -2,8 +2,8 @@
 
 # Development
 
-Go to -> https://github.com/Marc-Vibek-Labs/choreScheduler.git
-Move into the project directory -> cd choreScheduler
+- Go to -> https://github.com/Marc-Vibek-Labs/choreScheduler.git
+- Move into the project directory -> cd choreScheduler
 
 # Setup environment files
 
