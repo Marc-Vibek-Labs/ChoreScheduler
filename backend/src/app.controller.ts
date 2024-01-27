@@ -11,13 +11,8 @@ export class AppController {
     private readonly logger: PinoService
   ) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello()
-  }
-
   @Get('/health-check')
-  checkHealth(): boolean {
-    return true
+  checkHealth(): string {
+    return this.appService.checkHealth()
   }
 }
