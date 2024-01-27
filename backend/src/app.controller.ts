@@ -1,18 +1,12 @@
-import { AppService } from './app.service'
-import { ConfigService } from '@nestjs/config'
-import { Controller, Get } from '@nestjs/common'
-import { PinoService } from './pino/pino.service'
+import { AppService } from './app.service';
+import { Controller, Get } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private readonly configService: ConfigService,
-    private readonly logger: PinoService
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
-  @Get('/health-check')
-  checkHealth(): string {
-    return this.appService.checkHealth()
+  @Get()
+  getHello(): string {
+    return this.appService.getHello();
   }
 }
