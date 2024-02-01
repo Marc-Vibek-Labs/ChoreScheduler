@@ -7,8 +7,8 @@ RUN yarn
 
 COPY . .
 
-ARG FRONTEND_PORT
+ARG BACKEND_PORT
 
-EXPOSE ${FRONTEND_PORT}
+EXPOSE ${BACKEND_PORT}
 
-CMD yarn dev 
+CMD yarn && yarn dev

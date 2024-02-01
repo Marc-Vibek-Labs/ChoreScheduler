@@ -13,13 +13,14 @@ services:
     volumes:
       - ./backend:/usr/src/app
       - backend-deps:/usr/src/app/node_modules
-      - ./.prettierrc:/usr/src/.prettierrc
+      - ./prettier.config.js:/usr/src/prettier.config.js
       - ./.eslintrc.js:/usr/src/.eslintrc.js
+      - ./backend/node_modules:/usr/src/app/node_modules
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
       - 9229:9229
     networks:
-      - ilending
+      - choreScheduler
   frontend:
     build: frontend
     command: yarn dev
@@ -31,10 +32,25 @@ services:
       - .development.env
     working_dir: /usr/src/app
     volumes:
+      # This line defines a bind mount volume. It mounts the ./frontend directory on your local machine to the 
+      # /usr/src/app directory inside the container. This allows any files or directories in the ./frontend directory on your 
+      # local machine to be accessible inside the container at /usr/src/app. Changes made in the local ./frontend directory
+      # will be immediately visible inside the container.
       - ./frontend:/usr/src/app
+      # This line defines a named volume. It creates a Docker volume named frontend-deps and mounts it to the 
+      # /usr/src/app/node_modules directory inside the container. Named volumes are managed by Docker and provide a persistent
+      # storage solution that survives container restarts. In this case, it allows the node_modules directory inside the 
+      # container to persist even if the container is removed or recreated. This volume is typically used to store the 
+      # installed dependencies for your project, allowing you to avoid reinstalling them every time the container starts.
       - frontend-deps:/usr/src/app/node_modules
       - ./prettier.config.js:/usr/src/prettier.config.js
       - ./.eslintrc.js:/usr/src/.eslintrc.js
+      # Mounts the node_modules directory from your local machine's ./frontend directory to the /usr/src/app/node_modules 
+      # directory inside the container. This volume configuration allows the container to access and use the node_modules 
+      # directory from your local machine. This configuration is commonly used during development to avoid the overhead of 
+      # reinstalling dependencies inside the container. It will keep the node_modules of the container in sync with the local
+      # so that whenever we install a new package, we don't have to rebuild the containers.
+      - ./frontend/node_modules:/usr/src/app/node_modules
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     networks:
@@ -54,6 +70,7 @@ services:
 
 volumes:
   frontend-deps:
-
+  backend-deps:
+  
 networks:
   choreScheduler:
