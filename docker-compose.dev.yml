@@ -15,7 +15,7 @@ services:
       - backend-deps:/usr/src/app/node_modules
       - ./prettier.config.js:/usr/src/prettier.config.js
       - ./.eslintrc.js:/usr/src/.eslintrc.js
-      # - ./backend/node_modules:/usr/src/app/node_modules
+      - ./backend/node_modules:/usr/src/app/node_modules
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
       - 9229:9229
@@ -50,7 +50,7 @@ services:
       # directory from your local machine. This configuration is commonly used during development to avoid the overhead of 
       # reinstalling dependencies inside the container. It will keep the node_modules of the container in sync with the local
       # so that whenever we install a new package, we don't have to rebuild the containers.
-      # - ./frontend/node_modules:/usr/src/app/node_modules
+      - ./frontend/node_modules:/usr/src/app/node_modules
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     networks:
