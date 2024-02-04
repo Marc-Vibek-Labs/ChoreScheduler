@@ -17,7 +17,16 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "check-format": "prettier --list-different \"src/**/*.ts\"",
+    "knex": "knex --knexfile ./src/config/database/knexfile.ts",
+    "migrate:make": "yarn knex migrate:make -x ts --stub ./migration-stub.ts",
+    "migrate:up": "cd ../ && yarn backend:migrate:up",
+    "migrate:down": "cd ../ && yarn backend:migrate:down",
+    "migrate:list": "cd ../ && yarn backend:migrate:list",
+    "migrate:latest": "cd ../ && yarn backend:migrate:latest",
+    "migrate:rollback": "cd ../ && yarn backend:migrate:rollback",
+    "migrate:currentVersion": "cd ../ && yarn backend:migrate:currentVersion"
   },
   "dependencies": {
     "@nestjs/axios": "^3.0.1",

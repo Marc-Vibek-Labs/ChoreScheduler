@@ -68,7 +68,10 @@ export const AuthFormLayout = ({
             height="auto"
             loading="lazy"
             src={coverImgSrc}
+            objectFit="cover"
+            borderRadius="8px"
             backgroundColor="neutral.100"
+            boxShadow="5px 5px 5px rgba(0, 0, 0, 0.5)"
           />
         </CustomFade>
       </Flex>
