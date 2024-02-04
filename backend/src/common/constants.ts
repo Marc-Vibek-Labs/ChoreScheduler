@@ -27,6 +27,7 @@ export enum ErrorCode {
   MISSING_ENV_VARIABLE = 'missing-env-variable',
   UNKNOWN_ERROR = 'unknown-error',
   USER_NOT_FOUND = 'user-not-found',
+  USERNAME_ALREADY_IN_USE = 'username-already-present',
   USER_VERIFICATION_TOKEN_NOT_FOUND = 'user-verification-token-not-found',
   USER_VERIFICATION_TOKEN_EXPIRED = 'user-verification-token-expired',
   USER_ALREADY_EXISTS = 'user-already-exists',
@@ -101,5 +102,6 @@ export const errorMessages = {
   [ErrorCode.PASSWORD_MATCH_FAIL]: 'Password match failed',
   [ErrorCode.INCORRECT_PASSWORD]: 'Incorrect password',
   [ErrorCode.UPDATE_PASSWORD_ERROR]: 'Failed to update password',
+  [ErrorCode.USERNAME_ALREADY_IN_USE]: 'Username already in use',
   [ErrorCode.USER_PROFILE_UPDATE_FAILED]: 'Failed to update profile',
 };

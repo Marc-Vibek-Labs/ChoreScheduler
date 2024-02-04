@@ -29,3 +29,10 @@ export const updatePasswordSchema = Joi.object({
   newPassword: Joi.string().required(),
   confirmPassword: Joi.string().required(),
 });
+
+export const createUserSchema = Joi.object({
+  username: Joi.string().required(),
+  password: Joi.string().required(),
+  lastName: Joi.string().required(),
+  firstName: Joi.string().required(),
+});

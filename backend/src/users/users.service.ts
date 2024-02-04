@@ -4,6 +4,7 @@ import {
   HttpException,
   ServiceUnavailableException,
   UnprocessableEntityException,
+  ConflictException,
 } from '@nestjs/common';
 import { User } from './user.model';
 import { firstValueFrom } from 'rxjs';
@@ -82,6 +83,63 @@ export class UsersService {
       throw new ServiceUnavailableException(
         ErrorCode.USER_PROFILE_UPDATE_FAILED,
       );
+    }
+  }
+
+  async createUser(
+    {
+      firstName,
+      lastName,
+      username,
+      password,
+    }: Pick<User, 'firstName' | 'lastName' | 'username'> & {
+      password: string;
+    },
+    user: User,
+  ): Promise<unknown> {
+    const trx = await User.startTransaction();
+    try {
+      // Check that the provided username is unique and not already in use by another account
+      const existingUserWithSameUsername = await User.query(trx)
+        .where('username', username)
+        .first();
+      if (existingUserWithSameUsername != null) {
+        throw new ConflictException(ErrorCode.USERNAME_ALREADY_IN_USE);
+      }
+
+      // Hash the provided password before storing it in the database
+      const passwordHash = await Bcrypt.createHash(password);
+      const newUser: Partial<User> = {
+        firstName,
+        lastName,
+        username,
+        passwordHash,
+      };
+      const createdUser = await this.usersRepository.createUser(newUser, trx);
+
+      logger.info({
+        msg: 'User created',
+        createdUser,
+      });
+
+      await trx.commit();
+      return createdUser;
+    } catch (ex: unknown) {
+      await trx.rollback();
+      if (ex instanceof HttpException) {
+        throw ex;
+      }
+
+      const error = ex as Error;
+      logger.error(
+        {
+          userId: user.id,
+          stack: error.stack,
+        },
+        `Failed to create user profile`,
+      );
+
+      throw new ServiceUnavailableException(ErrorCode.USER_REGISTRATION_FAILED);
     }
   }
 }
