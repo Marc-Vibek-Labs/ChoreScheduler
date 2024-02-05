@@ -11,4 +11,4 @@ ARG FRONTEND_PORT
 
 EXPOSE ${FRONTEND_PORT}
 
-CMD yarn dev 
+CMD yarn dev

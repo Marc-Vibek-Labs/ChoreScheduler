@@ -22,8 +22,8 @@ export async function up(knex: Knex): Promise<void> {
       table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
       table.string('username').unique().notNullable();
       table.string('passwordHash').notNullable();
-      table.string('firstname').notNullable();
-      table.string('lastname').notNullable();
+      table.string('firstName').notNullable();
+      table.string('lastName').notNullable();
       table.integer('tenantScore').notNullable().defaultTo(0);
       table.timestamp('createdDate').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updatedDate').notNullable().defaultTo(knex.fn.now());

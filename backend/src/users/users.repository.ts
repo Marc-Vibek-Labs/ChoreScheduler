@@ -5,25 +5,25 @@ import { BaseStatus, UserStatus } from 'src/common/constants';
 
 @Injectable()
 export class UsersRepository {
-  constructor(@Inject(User) private readonly userRepository: typeof User) {}
+  constructor(@Inject(User) private readonly userModel: typeof User) {}
 
   async getUserById(id: string): Promise<User | undefined> {
-    return this.userRepository.query().findById(id);
+    return this.userModel.query().findById(id);
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return this.userRepository.query().where('username', username).first();
+    return this.userModel.query().where('username', username).first();
   }
 
   async getUsersByUsername(usernames: string[]): Promise<User[] | undefined> {
-    return this.userRepository.query().whereIn('username', usernames);
+    return this.userModel.query().whereIn('username', usernames);
   }
 
   async createUser(
     user: Partial<User>,
     trx?: Objection.Transaction,
   ): Promise<User> {
-    return this.userRepository.query(trx).insertAndFetch(user);
+    return this.userModel.query(trx).insertAndFetch(user);
   }
 
   async updatePassword(
@@ -31,7 +31,7 @@ export class UsersRepository {
     passwordHash: string,
     trx?: Objection.Transaction,
   ): Promise<number> {
-    return this.userRepository
+    return this.userModel
       .query(trx)
       .patch({ passwordHash })
       .where('username', '=', username);
@@ -42,6 +42,6 @@ export class UsersRepository {
     status: BaseStatus | UserStatus,
     trx?: Objection.Transaction,
   ): Promise<User> {
-    return this.userRepository.query(trx).patchAndFetchById(id, { status });
+    return this.userModel.query(trx).patchAndFetchById(id, { status });
   }
 }

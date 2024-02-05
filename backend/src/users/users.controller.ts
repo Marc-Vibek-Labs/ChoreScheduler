@@ -8,13 +8,31 @@ import {
   createUserSchema,
   updatePasswordSchema,
 } from './user.dto';
-import { Req, Put, Get, Body, UseGuards, Controller } from '@nestjs/common';
+import {
+  Req,
+  Put,
+  Get,
+  Body,
+  Post,
+  Param,
+  UseGuards,
+  Controller,
+  ParseIntPipe,
+} from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Put('user')
+  @Get('/user/:id')
+  async getUserById(
+    @Param('id') id: string,
+    @Req() request: Request,
+  ): Promise<User> {
+    return this.usersService.getUserById(id, request.user as User);
+  }
+
+  @Post('/user')
   async createUser(
     @Body(new ValidatorPipe(createUserSchema))
     body: Pick<User, 'firstName' | 'lastName' | 'username'> & {

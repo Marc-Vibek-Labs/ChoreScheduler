@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PinoModule } from './pino/pino.module';
 import { AppController } from './app.controller';
 import configuration from './config/configuration';
+import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
@@ -14,6 +15,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
       load: [configuration],
     }),
     PinoModule,
+    UsersModule,
     DatabaseModule,
   ],
   providers: [AppService],

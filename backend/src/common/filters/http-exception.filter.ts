@@ -1,13 +1,14 @@
+import * as Pino from 'pino';
 import { Response } from 'express';
 import { IErrorResponse } from '../../error/error.dto';
 import { ErrorCode, errorMessages } from '../constants';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 import {
-  ArgumentsHost,
   Catch,
-  ExceptionFilter,
-  HttpException,
   HttpStatus,
+  HttpException,
+  ArgumentsHost,
+  ExceptionFilter,
 } from '@nestjs/common';
 
 // Properties from exception.getResponse()
@@ -16,6 +17,10 @@ interface IHttpError {
   error: unknown;
   statusCode: HttpStatus;
 }
+
+const logger = Pino.pino({
+  name: 'UsersService',
+});
 
 // Reference: https://docs.nestjs.com/exception-filters
 @Catch(HttpException)
@@ -58,6 +63,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
         message: errorMessage || errorMessages[ErrorCode.UNKNOWN_ERROR],
       };
     }
+
+    logger.info(errorResponse);
 
     response.status(status).json(errorResponse);
   }
