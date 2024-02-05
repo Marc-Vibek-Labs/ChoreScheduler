@@ -52,6 +52,15 @@ Run `yarn start --build` or `docker-compose -f docker-compose.dev.yml --env-file
 4. Build application with `yarn start --build`
 5. Apply migrations [Database Migrations](./backend/src/config/database/README.md)
 
+# VSCode debugger setup
+
+The VSCode debugger setup is in the `.vscode/launch.json` file and to use it, simply press F5 or go through the debug menu
+
+1. Open vscode
+2. Click on the debug icon or press F5
+3. Select "Debug: Docker API" from the dropdown menu
+4. A new window should open, click on the green arrow button to start debugging
+
 # Common issues
 
 If Docker shows missing packages error, you likely need to delete the related image and the corresponding volume for that image and run `yarn start --build` again.
