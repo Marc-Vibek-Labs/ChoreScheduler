@@ -11,4 +11,4 @@ ARG BACKEND_PORT
 
 EXPOSE ${BACKEND_PORT}
 
-CMD yarn && yarn dev
+CMD yarn start:debug

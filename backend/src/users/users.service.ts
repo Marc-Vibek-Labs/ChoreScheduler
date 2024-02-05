@@ -5,6 +5,7 @@ import {
   ServiceUnavailableException,
   UnprocessableEntityException,
   ConflictException,
+  NotFoundException,
 } from '@nestjs/common';
 import { User } from './user.model';
 import { firstValueFrom } from 'rxjs';
@@ -133,13 +134,46 @@ export class UsersService {
       const error = ex as Error;
       logger.error(
         {
-          userId: user.id,
+          userId: user?.id,
           stack: error.stack,
+          errorMessage: error.message,
         },
         `Failed to create user profile`,
       );
 
       throw new ServiceUnavailableException(ErrorCode.USER_REGISTRATION_FAILED);
+    }
+  }
+
+  async getUserById(userId: string, user: User): Promise<User | null> {
+    try {
+      const foundUser: User = await this.usersRepository.getUserById(userId);
+      logger.debug({
+        msg: 'Found user',
+        foundUser,
+      });
+
+      if (!foundUser) {
+        throw new NotFoundException(ErrorCode.USER_NOT_FOUND);
+      }
+
+      return foundUser;
+    } catch (ex: unknown) {
+      if (ex instanceof HttpException) {
+        throw ex;
+      }
+
+      const error = ex as Error;
+      logger.error(
+        {
+          userId: user?.id,
+          stack: error.stack,
+          errorMessage: error.message,
+        },
+        `Failed to find user profile`,
+      );
+
+      throw new ServiceUnavailableException(ErrorCode.USER_NOT_FOUND);
     }
   }
 }

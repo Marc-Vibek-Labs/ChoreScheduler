@@ -1,7 +1,7 @@
-import Joi, { AnySchema } from 'joi';
-import { PipeTransform } from '@nestjs/common';
-import { joiValidate } from '../helpers/validation.helper';
+import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
+import Joi, { AnySchema, ValidationError } from 'joi';
 
+@Injectable()
 export class ValidatorPipe implements PipeTransform {
   constructor(
     private readonly schema: AnySchema,
@@ -9,7 +9,21 @@ export class ValidatorPipe implements PipeTransform {
   ) {}
 
   public transform(value: unknown): unknown {
-    joiValidate(this.schema, value);
+    const validationResult = this.validate(value);
+
+    if (validationResult.error) {
+      throw new BadRequestException(validationResult.error.message);
+    }
+
     return value;
   }
+
+  private validate(value: unknown): ValidationResult {
+    return this.schema.validate(value, { context: this.context });
+  }
+}
+
+interface ValidationResult {
+  value: unknown;
+  error?: ValidationError;
 }

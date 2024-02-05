@@ -12,11 +12,11 @@ export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction): void {
     // Close event is when the call has completed
     res.on('close', () => {
-      const loggerType: 'info' | 'error' = ['4', '5'].includes(
+      const loggerType: 'debug' | 'error' = ['4', '5'].includes(
         res.statusCode.toString()[0],
       )
         ? 'error'
-        : 'info';
+        : 'debug';
 
       // Function to hide password in the object
       const hidePassword = (
@@ -32,9 +32,7 @@ export class LoggerMiddleware implements NestMiddleware {
         return value;
       };
 
-      // Hide passwords if they were included in the request
-      // It might end up censoring unrelated data with 'password', but might not be too relevant
-      // Response doesn't matter as that is what the client will see anyway, but request objects are provided by clients
+      // Hide passwords if they were included in the request. It might end up censoring unrelated data with 'password'
       const censoredBody = objectMap(req.body, hidePassword);
       const censoredParams = objectMap(req.params, hidePassword);
 
