@@ -73,6 +73,7 @@ export class UsersService {
       }
 
       const error = ex as Error;
+
       logger.error(
         {
           userId: user.id,
@@ -96,9 +97,10 @@ export class UsersService {
     }: Pick<User, 'firstName' | 'lastName' | 'username'> & {
       password: string;
     },
-    user: User,
+    user?: User,
   ): Promise<unknown> {
     const trx = await User.startTransaction();
+
     try {
       // Check that the provided username is unique and not already in use by another account
       const existingUserWithSameUsername = await User.query(trx)
@@ -132,9 +134,10 @@ export class UsersService {
       }
 
       const error = ex as Error;
+
       logger.error(
         {
-          userId: user?.id,
+          userId: user?.id ?? username,
           stack: error.stack,
           errorMessage: error.message,
         },
@@ -145,10 +148,19 @@ export class UsersService {
     }
   }
 
-  async getUserById(userId: string, user: User): Promise<User | null> {
+  async getUserByIdOrUsername(
+    idOrUsername: string,
+    user?: User,
+  ): Promise<User | null> {
     try {
-      const foundUser: User = await this.usersRepository.getUserById(userId);
-      logger.debug({
+      let foundUser: User | null;
+      if (idOrUsername.includes('@')) {
+        foundUser = await this.usersRepository.getUserByUsername(idOrUsername);
+      } else {
+        foundUser = await this.usersRepository.getUserById(idOrUsername);
+      }
+
+      logger.info({
         msg: 'Found user',
         foundUser,
       });
@@ -164,9 +176,10 @@ export class UsersService {
       }
 
       const error = ex as Error;
+
       logger.error(
         {
-          userId: user?.id,
+          userId: user?.id ?? idOrUsername,
           stack: error.stack,
           errorMessage: error.message,
         },

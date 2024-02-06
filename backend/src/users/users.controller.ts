@@ -29,7 +29,7 @@ export class UsersController {
     @Param('id') id: string,
     @Req() request: Request,
   ): Promise<User> {
-    return this.usersService.getUserById(id, request.user as User);
+    return this.usersService.getUserByIdOrUsername(id, request.user as User);
   }
 
   @Post('/user')
