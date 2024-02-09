@@ -20,10 +20,11 @@ export async function up(knex: Knex): Promise<void> {
     logger.info(msg(`Creating ${TableNames.Users}`));
     await knex.schema.createTable(TableNames.Users, (table) => {
       table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
-      table.string('username').unique().notNullable();
+      table.string('email').unique().notNullable();
       table.string('passwordHash').notNullable();
       table.string('firstName').notNullable();
       table.string('lastName').notNullable();
+      table.string('phoneNumber');
       table.integer('tenantScore').notNullable().defaultTo(0);
       table.timestamp('createdDate').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updatedDate').notNullable().defaultTo(knex.fn.now());

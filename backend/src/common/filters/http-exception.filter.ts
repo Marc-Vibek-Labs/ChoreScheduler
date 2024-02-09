@@ -33,6 +33,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
     // Could either be IHttpErrorResponse or ErrorResponse
     const error = exception.getResponse() as IHttpError | IErrorResponse;
 
+    logger.error(
+      {
+        error,
+      },
+      `Raw error message`,
+    );
+
     let errorResponse: IErrorResponse;
 
     let errorMessage: string;

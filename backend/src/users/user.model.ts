@@ -8,7 +8,8 @@ export class User extends BaseModel {
   status: BaseStatus | UserStatus;
   firstName: string;
   lastName: string;
-  username: string;
+  email: string;
+  phoneNumber: number;
   passwordHash: string;
 
   async isCorrectPassword(password: string): Promise<boolean> {

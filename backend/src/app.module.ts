@@ -20,6 +20,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
     DatabaseModule,
     AuthenticationModule,
   ],
+  // All the @Injectable classes are providers. If you want to use any of the @Injectables in a module, they must be
+  // included in the providers array of that module.
   providers: [AppService],
   controllers: [AppController],
 })

@@ -4,17 +4,19 @@ import { BaseStatus, UserStatus } from 'src/common/constants';
 
 export class UserResponse {
   id: string;
-  username: string;
+  email: string;
   firstName: string;
   lastName: string;
+  phoneNumber: number;
   status: BaseStatus | UserStatus;
 
   constructor(params: User) {
     this.id = params.id;
     this.status = params.status;
-    this.username = params.username;
+    this.email = params.email;
     this.firstName = params.firstName;
     this.lastName = params.lastName;
+    this.phoneNumber = params.phoneNumber;
   }
 }
 
@@ -31,8 +33,9 @@ export const updatePasswordSchema = Joi.object({
 });
 
 export const createUserSchema = Joi.object({
-  username: Joi.string().required(),
+  email: Joi.string().required(),
   password: Joi.string().required(),
   lastName: Joi.string().required(),
   firstName: Joi.string().required(),
+  phoneNumber: Joi.number().required(),
 });

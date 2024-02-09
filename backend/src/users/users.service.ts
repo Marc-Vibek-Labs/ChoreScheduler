@@ -36,7 +36,7 @@ export class UsersService {
 
     try {
       const userEntity: User | undefined =
-        await this.usersRepository.getUserByUsername(user.username);
+        await this.usersRepository.getUserByEmail(user.email);
 
       if (!(await userEntity.isCorrectPassword(oldPassword))) {
         throw new UnprocessableEntityException(
@@ -54,7 +54,7 @@ export class UsersService {
 
       const passwordHash = await Bcrypt.createHash(newPassword);
       const updatePasswordResponse = await this.usersRepository.updatePassword(
-        user.username,
+        user.email,
         passwordHash,
         trx,
       );
@@ -92,9 +92,10 @@ export class UsersService {
     {
       firstName,
       lastName,
-      username,
+      email,
       password,
-    }: Pick<User, 'firstName' | 'lastName' | 'username'> & {
+      phoneNumber,
+    }: Pick<User, 'firstName' | 'lastName' | 'email' | 'phoneNumber'> & {
       password: string;
     },
     user?: User,
@@ -103,10 +104,10 @@ export class UsersService {
 
     try {
       // Check that the provided username is unique and not already in use by another account
-      const existingUserWithSameUsername = await User.query(trx)
-        .where('username', username)
+      const existingUserWithSameEmail = await User.query(trx)
+        .where('email', email)
         .first();
-      if (existingUserWithSameUsername != null) {
+      if (existingUserWithSameEmail != null) {
         throw new ConflictException(ErrorCode.USERNAME_ALREADY_IN_USE);
       }
 
@@ -115,8 +116,9 @@ export class UsersService {
       const newUser: Partial<User> = {
         firstName,
         lastName,
-        username,
+        email,
         passwordHash,
+        phoneNumber,
       };
       const createdUser = await this.usersRepository.createUser(newUser, trx);
 
@@ -137,7 +139,7 @@ export class UsersService {
 
       logger.error(
         {
-          userId: user?.id ?? username,
+          userId: user?.id ?? email,
           stack: error.stack,
           errorMessage: error.message,
         },
@@ -148,16 +150,16 @@ export class UsersService {
     }
   }
 
-  async getUserByIdOrUsername(
-    idOrUsername: string,
+  async getUserByIdOrEmail(
+    idOrEmail: string,
     user?: User,
   ): Promise<User | null> {
     try {
       let foundUser: User | null;
-      if (idOrUsername.includes('@')) {
-        foundUser = await this.usersRepository.getUserByUsername(idOrUsername);
+      if (idOrEmail.includes('@')) {
+        foundUser = await this.usersRepository.getUserByEmail(idOrEmail);
       } else {
-        foundUser = await this.usersRepository.getUserById(idOrUsername);
+        foundUser = await this.usersRepository.getUserById(idOrEmail);
       }
 
       logger.info({
@@ -179,7 +181,7 @@ export class UsersService {
 
       logger.error(
         {
-          userId: user?.id ?? idOrUsername,
+          userId: user?.id ?? idOrEmail,
           stack: error.stack,
           errorMessage: error.message,
         },

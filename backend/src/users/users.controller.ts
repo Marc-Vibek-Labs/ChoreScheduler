@@ -1,8 +1,5 @@
 import { Request } from 'express';
 import { User } from './user.model';
-import { UsersService } from './users.service';
-import { ValidatorPipe } from '../common/pipes/validator.pipe';
-// import { SessionGuard } from '../common/guards/session.guard';
 import {
   IUpdatePassword,
   createUserSchema,
@@ -17,25 +14,29 @@ import {
   Param,
   UseGuards,
   Controller,
-  ParseIntPipe,
 } from '@nestjs/common';
+import { UsersService } from './users.service';
+import { LoginJwtAuthGuard } from 'src/guards/auth.guard';
+import { ValidatorPipe } from '../common/pipes/validator.pipe';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('/user/:id')
+  @UseGuards(LoginJwtAuthGuard)
   async getUserById(
     @Param('id') id: string,
     @Req() request: Request,
   ): Promise<User> {
-    return this.usersService.getUserByIdOrUsername(id, request.user as User);
+    return this.usersService.getUserByIdOrEmail(id, request.user as User);
   }
 
-  @Post('/user')
+  @Post('/create-user')
+  @UseGuards(LoginJwtAuthGuard)
   async createUser(
     @Body(new ValidatorPipe(createUserSchema))
-    body: Pick<User, 'firstName' | 'lastName' | 'username'> & {
+    body: Pick<User, 'firstName' | 'lastName' | 'email' | 'phoneNumber'> & {
       password: string;
     },
     @Req() request: Request,
@@ -44,6 +45,7 @@ export class UsersController {
   }
 
   @Put('/update-password')
+  @UseGuards(LoginJwtAuthGuard)
   async updatePassword(
     @Body(new ValidatorPipe(updatePasswordSchema)) body: IUpdatePassword,
     @Req() request: Request,

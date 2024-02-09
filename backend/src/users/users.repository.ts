@@ -11,12 +11,12 @@ export class UsersRepository {
     return this.userModel.query().findById(id);
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return this.userModel.query().where('username', username).first();
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    return this.userModel.query().where('email', email).first();
   }
 
-  async getUsersByUsername(usernames: string[]): Promise<User[] | undefined> {
-    return this.userModel.query().whereIn('username', usernames);
+  async getUsersByEmail(emails: string[]): Promise<User[] | undefined> {
+    return this.userModel.query().whereIn('email', emails);
   }
 
   async createUser(
@@ -27,14 +27,14 @@ export class UsersRepository {
   }
 
   async updatePassword(
-    username: string,
+    email: string,
     passwordHash: string,
     trx?: Objection.Transaction,
   ): Promise<number> {
     return this.userModel
       .query(trx)
       .patch({ passwordHash })
-      .where('username', '=', username);
+      .where('email', '=', email);
   }
 
   async updateUserStatusById(
