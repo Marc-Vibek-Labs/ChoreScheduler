@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Flex, Spinner } from "@chakra-ui/react";
 import { NotFound } from "../components/NotFound";
 import { Navigate, Outlet } from "react-router-dom";
+import Dashboard from "../features/Dashboard/components/Dashboard";
 
 const AuthorizedApp = () => (
   <>
@@ -29,7 +30,7 @@ export const protectedRoutes = [
     element: <AuthorizedApp />,
     errorElement: <NotFound />,
     children: [
-      // { path: '/', element: <Dashboard /> },
+      { path: "/", element: <Dashboard /> },
       // { path: '/loans/*', element: <LoansRoutes /> },
       // { path: '/finance', element: <Finance /> },
       // { path: '/settings', element: <Settings /> },

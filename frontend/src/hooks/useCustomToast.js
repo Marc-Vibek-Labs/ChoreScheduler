@@ -1,12 +1,12 @@
-import { Flex, Image, Text, useToast, UseToastOptions } from '@chakra-ui/react';
+import { Flex, Image, Text, useToast, UseToastOptions } from "@chakra-ui/react";
 
 const AlertStatus = {
-  INFO:'info',
-  WARNING:'warning',
-  SUCCESS:'success',
-  ERROR:'error',
-  LOADING:'loading'
-}
+  INFO: "info",
+  WARNING: "warning",
+  SUCCESS: "success",
+  ERROR: "error",
+  LOADING: "loading",
+};
 
 const useCustomToast = () => {
   const toast = useToast();
@@ -17,22 +17,37 @@ const useCustomToast = () => {
     const getStatusIconFileName = () => {
       switch (status) {
         case AlertStatus.SUCCESS:
-          return 'ic_toast-success';
+          return "ic_toast-success";
         case AlertStatus.WARNING:
-          return 'ic_toast-pending';
+          return "ic_toast-pending";
         default:
-          return '';
+          return "";
+      }
+    };
+
+    const getBgColor = () => {
+      switch (status) {
+        case AlertStatus.INFO:
+          return "blue.500";
+        case AlertStatus.WARNING:
+          return "yellow.500";
+        case AlertStatus.SUCCESS:
+          return "green.500";
+        case AlertStatus.ERROR:
+          return "red.500";
+        default:
+          return "gray.500";
       }
     };
 
     toast({
       ...otherOptions,
       containerStyle: {
-        m: '10px 20px'
+        m: "10px 20px",
       },
       render: () => (
         <Flex
-          bg="neutral.800"
+          bg={getBgColor()}
           alignItems="center"
           minH="56px"
           gap="16px"
@@ -41,12 +56,18 @@ const useCustomToast = () => {
           borderRadius="8px"
           boxShadow="0px 2px 4px rgba(21, 23, 26, 0.24), 0px 4px 16px rgba(21, 23, 26, 0.16);"
         >
-          {status && getStatusIconFileName() && <Image src={`/assets/images/icons/${getStatusIconFileName()}.svg`} w="32px" h="32px" />}
+          {status && getStatusIconFileName() && (
+            <Image
+              src={`/assets/images/icons/${getStatusIconFileName()}.svg`}
+              w="32px"
+              h="32px"
+            />
+          )}
           <Text variant="subtitle" color="neutral.0" fontWeight={600}>
             {title}
           </Text>
         </Flex>
-      )
+      ),
     });
   };
 

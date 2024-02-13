@@ -1,5 +1,6 @@
 import { Link as ReactRouterLink } from "react-router-dom";
 import { CustomFade } from "../../../components/CustomFade";
+import ToggleColorMode from "../../../components/ToggleColorMode";
 import { Box, Flex, Text, Link, Image, Heading } from "@chakra-ui/react";
 
 export const AuthFormLayout = ({
@@ -13,18 +14,23 @@ export const AuthFormLayout = ({
   coverImgSrc,
 }) => (
   <>
-    <Flex direction={{ base: "column", lg: "row" }}>
+    <Flex direction={{ base: "column", lg: "row" }} height="100%">
       <Flex
-        width={{ base: "100%", lg: "50%" }}
-        paddingLeft="22px"
-        paddingRight="22px"
-        paddingTop="50px"
+        flex={0.5}
+        alignItems="center"
+        justifyContent="center"
         backgroundColor="neutral.50"
-        my="auto"
+        width={{ base: "100%", lg: "50%" }}
       >
         <CustomFade style={{ width: "100%" }}>
-          <Box marginX="auto" width={{ base: "100%", md: "90vw", lg: "483px" }}>
-            <Flex flexDirection="column" gap="12px" marginBottom="25px">
+          <Box
+            display="flex"
+            flexDirection="column"
+            px="90px"
+            py={10}
+            width={{ base: "100%", lg: "100%" }}
+          >
+            <Box marginBottom="25px">
               <Heading
                 variant={{ base: "headlineTwo", lg: "headlineOne" }}
                 fontWeight="bold"
@@ -32,10 +38,10 @@ export const AuthFormLayout = ({
                 {header}
               </Heading>
               <Text color="neutral.500">{subHeader}</Text>
-            </Flex>
-            {children}
+            </Box>
+            <Box>{children}</Box>
           </Box>
-          <Text align="center" marginTop="32px">
+          <Text align="center" mb={4}>
             {textBottom} {""}
             <Link
               as={ReactRouterLink}
@@ -49,38 +55,36 @@ export const AuthFormLayout = ({
           </Text>
         </CustomFade>
       </Flex>
-      <Flex
-        width={{ base: "100%", lg: "50%" }}
-        paddingTop="50px"
-        paddingLeft="22px"
-        paddingRight="22px"
-        paddingBottom="50px"
-        marginTop={{ base: "40px", lg: "0px" }}
-        backgroundColor="neutral.100"
-        alignItems="center"
-        justifyContent="center"
-        minH={{ base: "auto", lg: "100vh" }}
-      >
-        <CustomFade style={{ width: "100%" }}>
-          <Image
-            alt="Cover"
-            width="100%"
-            height="auto"
-            loading="lazy"
-            src={coverImgSrc}
-            objectFit="cover"
-            borderRadius="8px"
-            backgroundColor="neutral.100"
-            boxShadow="5px 5px 5px rgba(0, 0, 0, 0.5)"
-          />
-        </CustomFade>
-      </Flex>
+
+      <Box display="flex" flexDirection="column" flex={0.5}>
+        <Flex justifyContent="flex-end" mx={5} my={5}>
+          <ToggleColorMode />
+        </Flex>
+
+        <Flex
+          width={{ base: "100%", lg: "100%" }}
+          alignItems="center"
+          flex="1"
+          p={5}
+          justifyContent="center"
+          backgroundColor="neutral.100"
+          marginTop={{ base: "40px", lg: "0px" }}
+        >
+          <CustomFade style={{ width: "100%" }}>
+            <Image
+              alt="Cover"
+              width="100%"
+              height="50%"
+              loading="lazy"
+              src={coverImgSrc}
+              objectFit="cover"
+              borderRadius="8px"
+              backgroundColor="neutral.100"
+              boxShadow="5px 5px 5px rgba(0, 0, 0, 0.5)"
+            />
+          </CustomFade>
+        </Flex>
+      </Box>
     </Flex>
-    <Box
-      width="100%"
-      maxWidth={{ sm: "none", lg: "80vw" }}
-      padding={{ base: "0 16px", lg: "0" }}
-      margin="0 auto"
-    ></Box>
   </>
 );

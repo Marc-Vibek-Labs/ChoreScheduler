@@ -1,10 +1,22 @@
+import React from "react";
 import * as yup from "yup";
 import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useLoginMutation } from "../apis/login";
 import { yupResolver } from "@hookform/resolvers/yup";
-// import localStorage from "../../../utils/localStorage";
-import { Box, Input, Button, Text, FormControl } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import ToggleColorMode from "../../../components/ToggleColorMode";
+import {
+  Box,
+  Flex,
+  Text,
+  Input,
+  Button,
+  Spinner,
+  InputGroup,
+  FormControl,
+  InputRightElement,
+} from "@chakra-ui/react";
 
 const userSchema = yup.object({
   email: yup
@@ -22,8 +34,8 @@ const userSchema = yup.object({
     }),
 });
 
-export const LoginForm = ({ defaultUsername }) => {
-  const [rememberMe, setRememberMe] = useState(false);
+export const LoginForm = () => {
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const {
     register,
@@ -31,27 +43,15 @@ export const LoginForm = ({ defaultUsername }) => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(userSchema) });
 
-  const onSubmit = async (data) => {
-    // Submit data to your backend API here
-    console.log(data);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
-  useEffect(() => {
-    if (defaultUsername) {
-      setRememberMe(true);
-    }
-  }, [defaultUsername]);
+  const mutation = useLoginMutation();
 
-  // const mutation = useLoginMutation();
-
-  // const submitHandler = (data) => {
-  //   if (rememberMe) {
-  //     localStorage.setUsername(data.username);
-  //   } else {
-  //     localStorage.clearUsername();
-  //   }
-  //   // mutation.mutate(data);
-  // };
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+  };
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
@@ -67,12 +67,20 @@ export const LoginForm = ({ defaultUsername }) => {
           </Text>
         )}
       </FormControl>
+
       <FormControl mb="8">
-        <Input
-          type="password"
-          placeholder="Password"
-          {...register("password")}
-        />
+        <InputGroup>
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            {...register("password")}
+          />
+          <InputRightElement width="3rem">
+            <Button size="sm" onClick={togglePasswordVisibility}>
+              {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+            </Button>
+          </InputRightElement>
+        </InputGroup>
         {errors.password && (
           <Text color="red" fontSize="sm" mt="2">
             {errors.password.message}
@@ -80,8 +88,8 @@ export const LoginForm = ({ defaultUsername }) => {
         )}
       </FormControl>
 
-      <Button type="submit" colorScheme="purple">
-        Login
+      <Button type="submit" colorScheme="purple" width="73.5px">
+        {mutation.isPending ? <Spinner size="sm" color="white" /> : "Login"}
       </Button>
     </Box>
   );

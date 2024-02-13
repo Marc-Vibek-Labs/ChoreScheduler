@@ -23,6 +23,12 @@ import { ValidatorPipe } from '../common/pipes/validator.pipe';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get('/user')
+  @UseGuards(LoginJwtAuthGuard)
+  async getLoggedInUserDetails(@Req() request: Request): Promise<User> {
+    return request.user as User;
+  }
+
   @Get('/user/:id')
   @UseGuards(LoginJwtAuthGuard)
   async getUserById(

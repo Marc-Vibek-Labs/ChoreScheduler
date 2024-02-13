@@ -1,10 +1,7 @@
-// import localStorage from "../../../utils/localStorage";
 import { AuthFormLayout } from "../components";
 import { LoginForm } from "../components/LoginForm";
 
 export const Login = () => {
-  // const username = localStorage.getUsername();
-
   return (
     <AuthFormLayout
       linkTo="register"
@@ -15,7 +12,7 @@ export const Login = () => {
       coverImgSrc="/images/auth_login.png"
       subHeader={"Login to manage your account with Chore Scheduler."}
     >
-      <LoginForm defaultUsername={"username"} />
+      <LoginForm />
     </AuthFormLayout>
   );
 };

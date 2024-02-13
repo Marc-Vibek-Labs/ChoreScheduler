@@ -15,33 +15,8 @@ async function bootstrap(): Promise<void> {
   });
   const configService = app.get(ConfigService);
 
-  // const cookieTtlDuration = dayjs.duration(
-  //   configService.get('ADMIN_COOKIE_TTL') || 3,
-  //   'days',
-  // );
-
   app.use(compression());
-
-  // app.use(
-  //   session({
-  //     secret: process.env.BACKEND_SESSION_SECRET_KEY || '',
-  //     cookie: {
-  //       maxAge: cookieTtlDuration.asMilliseconds(),
-  //       httpOnly: true
-  //     },
-  //     resave: false,
-  //     saveUninitialized: false,
-  //     name: configService.get('ADMIN_COOKIE_NAME') || 'il.sid',
-  //     store: new KnexSessionStore({
-  //       ttl: cookieTtlDuration.asSeconds()
-  //     }).connect(UserSession)x
-  //   })
-  // );
-
-  // app.use(passport.initialize());
-
-  // app.use(passport.session());
-
+  app.setGlobalPrefix('api/v1');
   app.useGlobalFilters(new HttpExceptionFilter());
 
   app.enableCors({
