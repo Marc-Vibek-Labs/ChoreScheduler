@@ -24,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const user = await this.usersRepository.getUserById(id);
 
     if (!user) {
-      throw new UnauthorizedException(ErrorCode.INCORRECT_USERNAME_OR_PASSWORD);
+      throw new UnauthorizedException(ErrorCode.USER_NOT_FOUND);
     }
 
     return user;

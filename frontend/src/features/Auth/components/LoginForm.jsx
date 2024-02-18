@@ -1,14 +1,11 @@
 import React from "react";
 import * as yup from "yup";
-import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../apis/login";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import ToggleColorMode from "../../../components/ToggleColorMode";
 import {
   Box,
-  Flex,
   Text,
   Input,
   Button,

@@ -6,10 +6,10 @@ export const Login = () => {
     <AuthFormLayout
       linkTo="register"
       header={"Welcome Back"}
-      subText={"Or Log in with"}
+      subText={"Or Log In With"}
       linkBottom={"Sign up for free"}
       textBottom={"Don’t have an account?"}
-      coverImgSrc="/images/auth_login.png"
+      coverImgSrc="/images/app_cover_image.png"
       subHeader={"Login to manage your account with Chore Scheduler."}
     >
       <LoginForm />

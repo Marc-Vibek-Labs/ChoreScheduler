@@ -4,7 +4,6 @@ import { storage } from "../utils/storage";
 import { protectedRoutes } from "./protected";
 import { Flex, Spinner } from "@chakra-ui/react";
 import { createContext, useContext } from "react";
-import ToggleColorMode from "../components/ToggleColorMode";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useGetLoggedInUserDetails } from "../apis/getLoggedInUserDetails";
 
@@ -23,8 +22,21 @@ export const useAuthContext = () => {
 };
 
 export const AppRoutes = () => {
+  // Extract token from URL and store in browser localstorage
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const oauthToken = urlSearchParams.get("token");
+  oauthToken && storage.setToken(oauthToken);
+
+  React.useEffect(() => {
+    if (oauthToken) {
+      window.history.replaceState(null, "", "/");
+    }
+  }, [oauthToken]);
+
   const jwtToken = storage.getToken();
-  const { data, isLoading } = useGetLoggedInUserDetails(jwtToken);
+  const { data, isLoading } = useGetLoggedInUserDetails(
+    jwtToken ? jwtToken : oauthToken,
+  );
 
   if (isLoading) {
     return (

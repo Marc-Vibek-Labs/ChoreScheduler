@@ -1,7 +1,57 @@
+import { FcGoogle } from "react-icons/fc";
+import { Button } from "@chakra-ui/react";
+import { BsFacebook, BsApple } from "react-icons/bs";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { CustomFade } from "../../../components/CustomFade";
 import ToggleColorMode from "../../../components/ToggleColorMode";
-import { Box, Flex, Text, Link, Image, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Link,
+  Image,
+  Heading,
+  HStack,
+  Divider,
+} from "@chakra-ui/react";
+
+const iconsList = [
+  { id: "google", text: "Google", icon: <FcGoogle /> },
+  { id: "apple", text: "Apple ID", icon: <BsApple color="#000" /> },
+  { id: "facebook", text: "Facebook", icon: <BsFacebook color="#4267B2" /> },
+].filter(Boolean);
+
+const SocialMediaIcons = ({ icons }) => {
+  return (
+    <Flex
+      width="100%"
+      direction={{
+        base: "column",
+        lg: "row",
+      }}
+      gap="12px"
+      justifyContent="space-between"
+    >
+      {icons.map((item) => (
+        <Button
+          key={item.id}
+          leftIcon={item.icon}
+          size="lg"
+          variant="ghostOutline"
+          fontSize="20px"
+          lineHeight="120%"
+          color="neutral.900"
+          border="1px solid #6b7280"
+          width={["100%", "auto"]}
+          as="a"
+          href={`${process.env.REACT_APP_API_URL}/authentication/${item.id}`}
+        >
+          {item.text}
+        </Button>
+      ))}
+    </Flex>
+  );
+};
 
 export const AuthFormLayout = ({
   linkTo,
@@ -40,6 +90,17 @@ export const AuthFormLayout = ({
               <Text color="neutral.500">{subHeader}</Text>
             </Box>
             <Box>{children}</Box>
+
+            <HStack spacing="2" margin="22px 0 22px" justifyContent="center">
+              <Divider flex="1" borderColor="neutral.300" />
+              <Text as="span" padding="2">
+                {subText}
+              </Text>
+              <Divider flex="1" borderColor="neutral.300" />
+            </HStack>
+            <HStack>
+              <SocialMediaIcons icons={iconsList} />
+            </HStack>
           </Box>
           <Text align="center" mb={4}>
             {textBottom} {""}
