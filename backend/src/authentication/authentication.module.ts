@@ -4,6 +4,7 @@ import { HttpModule } from '@nestjs/axios';
 import { User } from 'src/users/user.model';
 import { JwtStrategy } from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { GoogleStrategy } from './google.strategy';
 import { UsersService } from 'src/users/users.service';
 import { UsersRepository } from 'src/users/users.repository';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -13,7 +14,10 @@ import { AuthenticationController } from './authentication.controller';
 
 @Module({
   imports: [
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule.register({
+      defaultStrategy: 'jwt',
+      session: true,
+    }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -32,10 +36,11 @@ import { AuthenticationController } from './authentication.controller';
   controllers: [AuthenticationController],
   providers: [
     JwtStrategy,
+    GoogleStrategy,
     UsersService,
     UsersRepository,
     AuthenticationService,
   ],
-  exports: [JwtStrategy, PassportModule],
+  exports: [JwtStrategy, GoogleStrategy, PassportModule],
 })
 export class AuthenticationModule {}

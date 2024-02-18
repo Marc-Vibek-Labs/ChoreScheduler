@@ -1,6 +1,6 @@
 import {
-  ExecutionContext,
   Injectable,
+  ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
 import * as Pino from 'pino';
@@ -29,6 +29,8 @@ export class LoginJwtAuthGuard extends AuthGuard('jwt') {
   }
 
   handleRequest(error: any, user: any) {
+    console.log('user', user);
+    console.log('error', error);
     if (error || !user) {
       throw new UnauthorizedException(ErrorCode.UNKNOWN_VALIDATION_ERROR);
     }

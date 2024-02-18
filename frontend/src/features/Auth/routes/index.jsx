@@ -1,9 +1,7 @@
 import * as React from "react";
 import { Login } from "./Login";
 import { Register } from "./Register";
-import { Flex } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
-import ToggleColorMode from "../../../components/ToggleColorMode";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 export const AuthRoutes = () => {

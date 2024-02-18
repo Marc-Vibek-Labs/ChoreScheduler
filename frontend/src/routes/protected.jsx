@@ -10,11 +10,11 @@ const AuthorizedApp = () => (
       fallback={
         <Flex h="100%" w="100%" alignItems="center" justifyContent="center">
           <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
             color="primary.500"
             size="xl"
+            speed="0.65s"
+            thickness="4px"
+            emptyColor="gray.200"
           />
         </Flex>
       }

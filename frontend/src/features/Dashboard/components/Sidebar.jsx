@@ -3,6 +3,7 @@ import {
   Box,
   Text,
   Icon,
+  Flex,
   Image,
   VStack,
   HStack,
@@ -34,12 +35,15 @@ const Sidebar = () => {
         justifyContent="space-between"
       >
         <VStack spacing="4" align="stretch">
-          <Image
-            alt="App Logo"
-            width="220px"
-            height="140px"
-            src="/images/app_logo.svg"
-          />
+          <Flex justifyContent="center" alignItems="center">
+            <Image
+              alt="App Logo"
+              width="170px"
+              height="140px"
+              borderRadius="70px"
+              src="/images/app_logo.png"
+            />
+          </Flex>
 
           <ChakraLink
             href="#"
